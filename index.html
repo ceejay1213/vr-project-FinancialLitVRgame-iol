@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WEB-VR</title>
+    <meta name="description" content="A-FRAME SAMPLE GAME" />
+    
+   <!--main AFRAME-->
+   <script src="js/aframe.min.js"></script>
+   <!--main AFRAME-->
+   <!--script src="js/vr-mode-ui.js"></script-->
+   <!--Aframe Camera-->
+   <!--script src="js/aframe-cursor.js"></script-->
+   <!--Aframe Camera-->
+   <!--script src="js/aframe-a-scene.js"></script-->
+   <!--SUPERHANDS-->
+   <script> 
+   AFRAME.registerComponent('auto-init-vr',{
+      init:function(){
+         var scene=this;
+         scene.el.addEventListener('loaded',function(){
+               setTimeout(function(){
+                  console.log('Automatically entering VR...');
+                  scene.el.sceneEl.enterVR();
+               },3000)
+         });
+      }
+         /*
+         setTimeout(function(){
+            console.log("automatically entering vr...");
+            console.log(this)
+            scene.el.sceneEl.enterVR();
+         },10000);*/
+      })
+   </script>
+   <script src="js/aframe-event-set-component.min.js"></script>
+   <script src="js/super-hands.min.js"></script>
+   <!--Physics-->
+   <script src="js/aframe-physics-system.min.js"></script>
+   <!--Extras-->
+   <script src="js/aframe-extras.min.js"></script>
+   <!--PARTICLE PACKAGE-->
+   <script src="js/aframe-particle-system-component.min.js"></script>
+   <!--SUPERHANDSSSSS-->
+   <script src="js/index.js"></script>
+   <!--lookatcomponent-->
+   <script src="js/aframe-look-at-component.js"></script>
+   <!--GIF component-->
+   <script src="js/aframe-gif-shader-master.js"></script>
+
+   
+  </head>
+
+  <body>
+    <a-scene auto-init-vr stats physics shadow="enabled:true" background="color: lightblue" renderer=
+    "foveationLevel:0; 
+     antialias: false; 
+     precision:low">
+      <!--renderer=
+       "foveationLevel:0; 
+        antialias: false; 
+        precision:low"-->
+      <a-assets timeout="10000">
+         <!--NEEDS AND WANTS-->
+         <img id="firstaidpixel"        src="assets/image/pixel/aid.png">
+         <img id="ballpixel"            src="assets/image/pixel/ball.png">
+         <img id="bananapixel"          src="assets/image/pixel/banana.png">
+         <img id="bearpixel"            src="assets/image/pixel/bear.png">
+         <img id="bookpixel"            src="assets/image/pixel/book.png">
+         <img id="bulbpixel"            src="assets/image/pixel/bulb.png">
+         <img id="burgerpixel"          src="assets/image/pixel/burger.png">
+         <img id="candypixel"           src="assets/image/pixel/candy.png">
+         <img id="chocolatepixel"       src="assets/image/pixel/choco.png">
+         <img id="cokepixel"            src="assets/image/pixel/coke.png">
+         <img id="consolepixel"         src="assets/image/pixel/console.png">
+         <img id="cornpixel"            src="assets/image/pixel/corn2.png">
+         <img id="dewpixel"             src="assets/image/pixel/dew.png">
+         <img id="dollpixel"            src="assets/image/pixel/doll.png">
+         <img id="eggplantpixel"        src="assets/image/pixel/eggplant.png">
+         <img id="fishpixel"            src="assets/image/pixel/fish.png">
+         <img id="housepixel"           src="assets/image/pixel/house.png">
+         <img id="icecreampixel"        src="assets/image/pixel/icecream.png">
+         <img id="lollipoppixel"        src="assets/image/pixel/lollipop.png">
+         <img id="meatpixel"            src="assets/image/pixel/meat.png">
+         <img id="pantspixel"           src="assets/image/pixel/pants.png">
+         <img id="pencilpixel"          src="assets/image/pixel/pencil.png">
+         <img id="phonepixel"           src="assets/image/pixel/phone.png">
+         <img id="phoneoldpixel"        src="assets/image/pixel/Phoneold.png">
+         <img id="pizzapixel"           src="assets/image/pixel/pizza.png">
+         <img id="popsiclepixel"        src="assets/image/pixel/pop.png">
+         <img id="ringpixel"            src="assets/image/pixel/ring.png">
+         <img id="shirtpixel"           src="assets/image/pixel/shirt.png">
+         <img id="strawberrypixel"      src="assets/image/pixel/strawberry.png">
+         <img id="watchpixel"           src="assets/image/pixel/watch.png">
+         <img id="waterpixel"           src="assets/image/pixel/water.png">
+         <img id="watermelonpixel"      src="assets/image/pixel/watermelon.png">
+         
+
+
+         <!--TRIVIAS-->
+         <a-mixin id="trivia1" class="trivia"
+                  text="value: Did You Know?\nFish is rich in calcium and phosphorus and a great source of minerals, such as iron, zinc, iodine, magnesium, and potassium.;">
+         </a-mixin>
+         <a-mixin id="trivia2" class="trivia"
+                  text="value: Did You Know?\nStrawberries are members of the rose family. Should you come upon a bush of them growing, you’ll see: they smell as sweet as they taste.;">
+         </a-mixin>
+         <a-mixin id="trivia3" class="trivia"
+                  text="value: Did You Know?\nThe scientific name for banana is musa sapientum, which means “fruit of the wise men.;">
+         </a-mixin>
+         <a-mixin id="trivia4" class="trivia"
+                  text="value: Did You Know?\nCorn can also be found in many non-food items such as fireworks, glue, paint, dyes, laundry detergent, soap, antibiotics, cosmetics, 
+                  and in the production of plastics.”;">
+         </a-mixin>
+         <a-mixin id="trivia5" class="trivia"
+                  text="value: Did You Know?\nEggplants aren't REALLY vegetables, they're berries. Which isn't that strange, considering other fruits are commonly mistaken for vegetables like tomatoes.;">
+         </a-mixin>
+         <a-mixin id="trivia6" class="trivia"
+                  text="value: Did You Know?\nA variety of materials are used to make a t-shirt, along with leather, gold, and even human hair.;">
+         </a-mixin>
+         <a-mixin id="trivia7" class="trivia"
+                  text="value: Did You Know?\nDrinking water may help to prevent and treat headaches;">
+         </a-mixin>
+         <a-mixin id="trivia8" class="trivia"
+                  text="value: Did You Know?\nA watermelon will not grow in your belly if you eat the seeds. In fact, the seeds are actually quite nutritious with high levels of magnesium, zinc and protein.;">
+         </a-mixin>
+         <a-mixin id="trivia9" class="trivia"
+                  text="value: Did You Know?\nThe electric bulb has been called the most invention since man-made fire.;">
+         </a-mixin>
+         <a-mixin id="trivia10" class="trivia"
+                  text="value: Did You Know?\nIlliteracy is still a huge problem throughout the world.One in five adults around the world can’t read or write, with the highest rates in South and West Asia and sub-Saharan Africa.;">
+         </a-mixin>
+         <a-mixin id="trivia11" class="trivia"
+                  text="value: Did You Know?\nA pencil can write 45,000 words!;">
+         </a-mixin>
+         <a-mixin id="trivia12" class="trivia"
+                  text="value: Did You Know?\nCandies and sweets usually have very rich calorie and energy content that is packaged into very small serving of food.;">
+         </a-mixin>
+         <a-mixin id="trivia13" class="trivia"
+                  text="value: Did You Know?\n According to a recent Gallup Poll, kids between the ages of 3 to 11 prefer pizza over all other food groups for lunch and dinner.;">
+         </a-mixin>
+         <a-mixin id="trivia14" class="trivia"
+                  text="value: Did You Know?\nThe record price for a teddy bear is $2.1 million.;">
+         </a-mixin>
+         <a-mixin id="trivia15" class="trivia"
+                  text="value: Did You Know?\nThe high acidity and sugary ingredients of sodas cause tooth enamel and cavities.;">
+         </a-mixin>
+         <a-mixin id="trivia16" class="trivia"
+                  text="value: Did You Know?\n60% of sandwiches sold globally are actually burgers.;">
+         </a-mixin>
+         <a-mixin id="trivia17" class="trivia"
+                  text="value: Did You Know?\nThe most popular Popsicle flavor is Cherry.;">
+         </a-mixin>
+         <a-mixin id="trivia18" class="trivia"
+                  text="value: Did You Know?\nBilliards was the first sport to have a world championship (1873).;">
+         </a-mixin>
+         <a-mixin id="trivia19" class="trivia"
+                  text="value: Did You Know?\nThe meaning of the term 'Lollipop' is “tongue slap”.;">
+         </a-mixin>
+         <a-mixin id="trivia20" class="trivia"
+                  text="value:Did You Know?\nChocolate comes from a fruit tree, it’s made from a seed.;">
+         </a-mixin>
+
+
+
+         <!--SHAPES-->
+         <a-mixin id="thinbox" geometry="primitive:box; width:3, height:0.65; depth:0.3"></a-mixin>
+         <a-mixin id="flatshader"   material="shader:flat"></a-mixin>
+
+         <!--TRANSPARENT-->
+         <a-mixin id="alphaTrue" 
+                  material="alpha-test:0.5">
+         </a-mixin>
+         <a-mixin id="textAlphaTrue"
+         		  text="alpha-test:0.5">
+         </a-mixin>
+
+         <!--modelMixinsNeeds-->
+         <a-mixin id="FirstAidKit" class="pixelModel needs"
+                  material="src:#firstaidpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Ball" class="pixelModel wants"
+                  material="src:#ballpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Banana" class="pixelModel needs"
+                  material="src:#bananapixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Book" class="pixelModel needs"
+                  material="src:#bookpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Bulb" class="pixelModel needs"
+                  material="src:#bulbpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Burger" class="pixelModel wants"
+                  material="src:#burgerpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Candy" class="pixelModel wants"
+                  material="src:#candypixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Chocoloate" class="pixelModel wants"
+                  material="src:#chocolatepixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Coke" class="pixelModel wants"
+                  material="src:#cokepixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="GameConsole" class="pixelModel wants"
+                  material="src:#consolepixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Corn" class="pixelModel needs"
+                  material="src:#cornpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="MountainDew" class="pixelModel wants"
+                  material="src:#dewpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Doll" class="pixelModel wants"
+                  material="src:#dollpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Eggplant" class="pixelModel needs"
+                  material="src:#eggplantpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Fish" class="pixelModel needs"
+                  material="src:#fishpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="House" class="pixelModel needs"
+                  material="src:#housepixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Icecream" class="pixelModel wants"
+                  material="src:#icecreampixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Lollipop" class="pixelModel wants"
+                  material="src:#lollipoppixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Meat" class="pixelModel needs"
+                  material="src:#meatpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="1.780 1.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Pants" class="pixelModel needs"
+                  material="src:#pantspixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Pencil" class="pixelModel needs"
+                  material="src:#pencilpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="iPhone" class="pixelModel wants"
+                  material="src:#phonepixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Phone" class="pixelModel needs"
+                  material="src:#phoneoldpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Pizza" class="pixelModel wants"
+                  material="src:#pizzapixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Popsicle" class="pixelModel wants"
+                  material="src:#popsiclepixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Ring" class="pixelModel wants"
+                  material="src:#ringpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Shirt" class="pixelModel needs"
+                  material="src:#shirtpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Strawberry" class="pixelModel needs"
+                  material="src:#strawberrypixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="GoldWatch" class="pixelModel wants"
+                  material="src:#watchpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Water" class="pixelModel needs"
+                  material="src:#waterpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+         <a-mixin id="Watermelon" class="pixelModel needs"
+                  material="src:#watermelonpixel; transparent:true"
+                  geometry="primitive:box; height:1; width:1; depth:0.0001"
+                  scale="2.780 2.660 -1.510">
+         </a-mixin>
+        
+
+         <!--InterActivity-->
+         <a-mixin id="interactibfull" 
+            grabbable stretchable draggable dropppable>
+         </a-mixin>
+
+         <!--ANIMATION-->
+         <a-mixin id="hoverupdown" 
+            animation=  
+               "property: position; 
+               to: -1 3 -7; 
+               dur:3500; 
+               dir: alternate; 
+               easing: easeInOutCubic;
+               loop: true;">
+         </a-mixin>
+         <a-mixin id="hoverupdown2" 
+            animation= 
+               "property: position; 
+               to: 1 3.3 -7; 
+               dur:3500; 
+               dir: alternate; 
+               easing: easeInOutCubic;
+               loop: true;">
+         </a-mixin>
+         <a-mixin id="rotation" 
+            animation2= 
+               "_event:fusing; 
+               property: rotation; 
+               to: 0 360 0; 
+               dur:3500; 
+               easing: 
+               easeInOutCubic; 
+               loop:false">
+         </a-mixin>
+        <a-mixin id="heartAnimate" 
+                  animation=
+                     "property: rotation; 
+                     to: 0 360 0; 
+                     dur:2500; 
+                     easing: linear;
+                     loop:true;">
+         </a-mixin>
+
+         <!--UI ASSETS-->
+         <a-asset-item id="heartmodel"    src="assets/models/scene.gltf"></a-asset-item>
+         <img id="le"                     src="assets/image/hardwood2_diffuse_2.jpg">
+         <img id="groundTexture"          src="assets/image/sand2.jpg">
+         <img id="buttonTexture"          src="assets/image/brick_diffuse.jpg">
+         <img id ="logo"                  src="assets/image/iol_logo2.png">
+         <img id="skyTexture"             src="assets/image/background1.png" >
+         <img id="correctGif"             src="assets/gif/checkImage.png" >
+         <img id="wrongGif"               src="assets/gif/xImage.png" >
+         <img id="nb"                     src="assets/gif/needs.gif" >
+         <img id="wb"                     src="assets/gif/wants.gif" >
+         <img id="needsAndWantsSign"      src="assets/gif/needsAndWantsSign.gif" >
+         <img id="coins"                  src="assets/image/pixel/coiners.png" >
+         <img id="nice"                   src="assets/image/pixel/nice.png" >
+         <img id="veryGood"               src="assets/image/pixel/very good2.png" >
+         <img id="gameOver"               src="assets/image/pixel/game over2.png" >
+         <a-mixin id="heart" 
+            material="src:#coins; transparent:true; alpha-test:0.5" 
+            geometry="primitive:box; height:1;width:1;depth:0.01"
+            scale="2 2 2" 
+            sound="src: #sample; volume: 5; on: click">
+         </a-mixin>
+
+
+         <a-mixin id="wood" 
+            gltf-model="#woodtexture" 
+            modify-materials 
+            scale="0.380 0.190 -0.210" >
+         </a-mixin>
+         <a-mixin id="font" 
+            text="shader: msdf; 
+                  font:assets/font/coiny/Coiny-Regular.json; 
+                  fontImage: assets/font/coiny/Coiny-Regular.png;
+                  alpha-test:0.500">
+    	 </a-mixin>
+      	<a-mixin id="fontTrivia" 
+            text="shader: msdf; 
+                  font:assets/font/concertone/ConcertOne-Regular.json; 
+                  fontImage: assets/font/concertone/ConcertOne-Regular.png;
+                  alpha-test:0.500">
+     	</a-mixin>
+		<a-mixin id="renderCorrectGif"
+            material="src:#correctGif; transparent:true; shader:gif" 
+            geometry="primitive:box; height:1;width:1;depth:0.01"
+            class="startmenu" 
+            scale="1.5 1.5 0"
+            position="-2.604 0.970 -5">
+     	</a-mixin>
+
+
+         <!--Audio-->
+         <audio id="sample" src="assets/sounds/nu.ogg" positional="false" ></audio>
+         <audio id="SMPop" src="assets/sounds/BG/Pop Echo.wav" positional="false"></audio>
+         <audio id="SMBGM" src="assets/sounds/BG/Having a good time_2.mp3" positional="false" preload="auto"></audio>
+         <audio id="GSBGM" src="assets/sounds/BG/Arcada Game Melody Loop 8 bars.wav" positional="false"></audio>
+         <audio id="GSSwap" src="assets/sounds/BG/Gaming Swipe Throw.wav" positional="false"></audio>
+         <audio id="GSPickUp" src="assets/sounds/BG/Game Play Pickup.wav" positional="false"></audio>
+         <audio id="GSCorrect" src="assets/sounds/BG/Gaming Health Win.wav" positional="false"></audio>
+         <audio id="GSWrong" src="assets/sounds/BG/Gaming Bop Hit.wav" positional="false"></audio>
+         <audio id="GOFail" src="assets/sounds/BG/Game Play Fall.wav" positional="false"></audio>
+         <audio id="GOWin" src="assets/sounds/BG/Game Play Reveal Bonus.wav" positional="false"></audio>
+
+         <!-- Bucket-->
+         <a-asset-item id="bucket-obj" src="assets/bucket.obj"></a-asset-item>
+         <a-asset-item id="bucket-mtl" src="assets/bucket.mtl"></a-asset-item> 
+
+      </a-assets>
+      <!--SOUNDS-->
+      <a-sound id=startMenuPop src="#SMPop" volume="1" poolSize="3"></a-sound>
+      <a-sound is-sound-loaded id=startMenuBGM src="#SMBGM" volume="1" loop="true" poolSize="3"></a-sound>
+      <a-sound id=gameStartBGM src="#GSBGM" volume="1" loop="true" poolSize="3"></a-sound>
+      <a-sound id=gameStartPickUp src="#GSPickUp" volume="2" ></a-sound>
+      <a-sound id=gameStartSwap src="#GSSwap" volume="2" ></a-sound>
+      <a-sound id=gameStartCorrect src="#GSCorrect" volume="1" ></a-sound>
+      <a-sound id=gameStartWrong src="#GSWrong" volume="1" ></a-sound>
+      <a-sound id=gameOverFail src="#GOFail" volume="1" ></a-sound>
+      <a-sound id=gameOverWin src="#GOWin" volume="1" ></a-sound>
+
+      
+      <!--#camera-->
+
+      <a-camera id="cam" position="0 1.6 0" look-controls="pointerLockEnabled:true">
+         <a-cursor id="cursorito"
+               cursor="fuse:true; fuseTimeout:1000"
+               position="0 0 -0.7"
+               raycaster-listen
+               raycaster="origin:0 0 0.310; interval:0.0001;"
+               capture-mouse
+               super-hands=
+               "colliderEvent: raycaster-intersection;
+               colliderEventProperty: els;
+               colliderEndEvent:raycaster-intersection-cleared;
+               colliderEndEventProperty: clearedEls;"
+               geometry=
+                  "primitive: ring; 
+                  radiusInner: 0.01; 
+                  radiusOuter: 0.02;
+                  thetaStart:90;
+                  thetaLength:0;"
+               material="color:yellow"
+               animation__fusing=
+                  "property: geometry.thetaLength; 
+                  startEvents: fusing; 
+                  easing: easeInOutCubic; 
+                  dur: 1000; 
+                  from: 0; 
+                  to: 360"
+               animation__click=
+                  "property: scale; 
+                  startEvents: click; 
+                  easing: easeInCubic; 
+                  dur:80; 
+                  dir:alternate;
+                  to:0.01 0.01 0.01;
+                  loop:1"
+               animation__mouseleave=
+                  "property: geometry.thetaLength; 
+                  startEvents: mouseleave; 
+                  easing: easeInCubic; 
+                  from:0;
+                  to: 0">
+         </a-cursor>
+      
+         <a-box id="fadeBox"
+            geometry="width:1; height:1; depth:0.001"
+            position="0 0 -.2"
+            material="color:black;transparent:true; opacity:0.499"
+            mixin="alphaTrue"
+            animation__fade="
+               property:material.opacity;
+               loop:0;
+               dir:alternate;
+               dur:500;
+               easing:linear;
+               autoplay:false">
+         </a-box>
+
+         <a-text id="cursorText"
+                  mixin="font"
+                  text="align:center; color:white; value: ; width:0.8; yOffset:40; alpha-test:0.5;"
+                  position="0.000 -0.020 -0.500"
+                  sound=" src:assets\sounds\BG\Pop 9.wav; volume:5; on:click;">
+            </a-text>
+         <a-ring  radius-inner="0.01" radius-outer="0.02" material="color:black" position="0 0 -0.8"></a-ring>
+      </a-camera>
+      
+      <a-sky id="sky"
+            theta-length="180" 
+            radius="60" 
+            geometry="segmentsHeight:16; segmentsWidth:24"
+            material="src:#skyTexture;"
+            mixin="alphaTrue"
+            raycaster-listen
+            rotation="0 -90 0">
+      </a-sky>
+     
+      <a-sky id="interactionGlobe"
+            theta-length="360" 
+            radius="15" 
+            geometry="segmentsHeight:16; segmentsWidth:24"
+            mixin="alphaTrue"
+            material="transparent:true; visible:false"
+            raycaster-listen
+            rotation="0 -90 0">
+      </a-sky>
+    </a-scene>
+  </body>
+</html>
