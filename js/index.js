@@ -1,12 +1,246 @@
+//<<<<<<<//CUSTOM COMPONENTS//>>>>>>>//
+
+//superhands component
+AFRAME.registerComponent("capture-mouse", {
+    init: function() {
+        this.eventRepeater = this.eventRepeater.bind(this);
+        this.el.sceneEl.addEventListener(
+        "loaded",
+        () => {
+            this.el.sceneEl.canvas.addEventListener("mousedown",this.eventRepeater);
+            this.el.sceneEl.canvas.addEventListener("mouseup",this.eventRepeater);
+            this.el.sceneEl.canvas.addEventListener("touchstart",this.eventRepeater);
+            this.el.sceneEl.canvas.addEventListener("touchmove",this.eventRepeater);
+            this.el.sceneEl.canvas.addEventListener("touchend",this.eventRepeater);
+        },{ once: true });
+    },
+    eventRepeater: function(evt) {
+        if (evt.type.startsWith("touch")) {
+            evt.preventDefault();
+            // avoid repeating touchmove because it interferes with look-controls
+            if (evt.type === "touchmove") {
+                return;
+            }
+        }
+        this.el.emit(evt.type, evt.detail);
+    }
+});
+
+AFRAME.registerComponent("event_dragdrop2", {
+    play: function() {
+        this.el.addEventListener("click", function(evt) {
+             game.checkIfCorrect(evt);
+        });
+    }
+});
+
+//gaze controls
+AFRAME.registerComponent("stop-animation", {
+    play: function() {
+        this.el.addEventListener("mousedown", 
+        function(e) {
+            try{
+                e.toElement.removeAttribute('static-body');
+                e.toElement.setAttribute('dynamic-body','shape:auto');
+                //code that causes an error
+            }catch(errorr){
+                //console.log("index.js error mousedown event")
+            }
+            // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
+        });
+        this.el.addEventListener("mouseup", 
+            function(e) {
+                try{
+                    e.toElement.removeAttribute('dynamic-body');
+                    e.toElement.setAttribute('static-body','shape:auto');
+                    //code that causes an error
+                }catch(errorr){
+                    //console.log("index.js error mouseup event")
+                }
+        });
+    }
+});
+
+//sounds click and swap
+AFRAME.registerComponent("selectedornot", {
+    init: function() {
+        this.el.addEventListener("click", 
+        function(e){
+            let sounds={
+                entityPickUp:$$('gameStartPickUp').components.sound,
+                entitySwap:$$('gameStartSwap').components.sound
+            }
+            let cursorText=$$('cursorText');
+
+            //console.log(e)
+            if(selected.entity=="en" ){
+                sounds.entityPickUp.playSound();
+
+                //save entity animations and positions 
+                selected.entity=e.target;
+                selected.posx=roundToThousandths(e.target.components.position.data.x);
+                selected.posy=roundToThousandths(e.target.components.position.data.y);
+                selected.posz=roundToThousandths(e.target.components.position.data.z);
+                selected.position=appendXYZwithSpaces(selected.posx,selected.posy,selected.posz)
+                selected.animation=e.target.getAttribute('animation');
+                selected.rotation=e.target.getAttribute('animation_rotate');
+
+                //remove rotation
+                selected.entity.removeAttribute('animation_rotate');
+                cursorText.setAttribute('text',`value: ${selected.entity.id}`);
+
+
+                
+                //set look-at attribute
+                selected.entity.setAttribute('look-at','#cam');
+                game.deleteGif('deleteGif');
+            }
+            if(selected.entity!=e.target){
+                sounds.entitySwap.playSound();
+
+                //revert back to original position
+                selected.entity.setAttribute('animation_rotate',selected.rotation);
+                selected.entity.setAttribute('position',selected.position);
+                selected.entity.setAttribute('animation',selected.animation);
+                console.log(String(e.target.getAttribute('animation')));
+                //remove look-at
+                selected.entity.removeAttribute('look-at');
+ 
+                //save new entity
+                selected.entity=e.target;
+                selected.posx=roundToThousandths(e.target.components.position.data.x);
+                selected.posy=roundToThousandths(e.target.components.position.data.y);
+                selected.posz=roundToThousandths(e.target.components.position.data.z);
+                selected.position=appendXYZwithSpaces(selected.posx,selected.posy,selected.posz)
+                selected.animation=e.target.getAttribute('animation');
+
+                //remove rotation
+                selected.entity.removeAttribute('animation_rotate');
+                cursorText.setAttribute('text',`value: ${selected.entity.id}`);
+
+                //set look-at attribute
+                selected.entity.setAttribute('look-at','#cam');
+                game.deleteGif('deleteGif');
+            }
+
+            // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
+        });
+    }
+});
+
+AFRAME.registerComponent("selectedornot2", {
+    init: function() {
+        let obj;
+        this.el.addEventListener("click", 
+        function(e){
+            console.log(e)
+            selected.entity=e.target
+            // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
+        });
+    }
+});
+
+AFRAME.registerComponent("emitgrab", {
+    init: function() {
+        let obj;
+        this.el.addEventListener("mousedown", e => {
+        e.toElement.removeAttribute('static-body');
+        e.toElement.setAttribute('dynamic-body','shape:auto');
+        // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
+        console.log(e)
+        console.log(e.toElement.className)
+        });
+        this.el.addEventListener("mouseup", e => {
+        e.toElement.removeAttribute('dynamic-body');
+        e.toElement.setAttribute('static-body','shape:auto');
+        // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
+        console.log(e)
+        });
+    }
+});
+
+//previously known as is-sound-loaded
+AFRAME.registerComponent('game-start-initiator', {
+    init: function () {
+
+        this.el.addEventListener('sound-loaded',function(){
+            console.log("Game Starting...")
+            game.mainMenu();
+        })
+    }
+  });
+
+
+AFRAME.registerComponent('startclicked', {
+    init: function () {
+        this.el.addEventListener('click',
+        function(evt){
+            let sounds={
+                buttonPop:$$('startMenuPop').components.sound,
+            }
+            sounds.buttonPop.playSound();
+            deleteRestartMenu();
+            game.startGame();
+            game.removeentity(this,false);
+            
+        })
+    }
+});
+
+AFRAME.registerComponent('returntomainmenu', {
+    init: function () {
+        this.el.addEventListener('click',
+        function(evt){
+            let sounds={
+                buttonPop:$$('startMenuPop').components.sound,
+            }
+            sounds.buttonPop.playSound();
+
+            deleteRestartMenu();
+            game.mainMenu();
+            
+        })
+    }
+});
+
+AFRAME.registerComponent('raycaster-listen', {
+    dependencies: ['raycaster'],
+    tick: function () {
+        timer=Date.now();
+        let difference=timer-prevtime;
+        if(difference>10){
+            prevtime=Date.now();
+        }
+        game.getRayIntersection();
+        this.el.addEventListener('raycaster-intersected', 
+        function(evt){
+          //  console.log("fuesddddddddddddd");
+         //   console.log(evt.detail);
+          //  console.log(evt.detail.getIntersection(this.el));
+        });
+    }
+});
+
+AFRAME.registerComponent('audiohandler', {
+    init:function() {
+    let playing = false;
+    let audio = this.el.components.sound;
+    this.el.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/b/bd/Bizet_-_Carmen_-_Toreador_Song_%28French%2C_Musopen%29.ogg");
+
+    this.el.addEventListener('click', () => {
+        if(!playing) {
+            audio.playSound();
+        } else {
+            audio.stopSound();
+        }
+        playing = !playing;
+        });
+    }
+});
+
 let $   = (queryString)=> document.querySelector(queryString);
 let $$  = (id)=> document.getElementById(id);
 let $$$ = (classname) => document.getElementsByClassName(classname);
-
-let condition={
-    isReady:false,
-    isRemovable:false
-}
-
 let selected={ 
     entity:"en",
     position:"en",
@@ -16,6 +250,7 @@ let selected={
     animation:"en",
     rotation:"en"
 };
+
 
 let timer=Date.now();
 let prevtime=Date.now();
@@ -70,42 +305,6 @@ function Game(){
         let startbgm=$$('startMenuBGM');
         startbgm.components.sound.playSound();
         loadMenu();
-    }
-
-    this.tutorial=function(){
-        let text1=document.createElement('a-text');
-        let text2=document.createElement('a-text');
-        let text3=document.createElement('a-text');
-        let logo=document.createElement('a-image');
-
-        let check1=document.createElement('a-image');
-
-
-        text1.setAttribute('class','tutorial');
-        text1.setAttribute('id','step1');
-        text1.setAttribute('mixin','font alphaTrue textAlphaTrue');
-        text1.setAttribute('text','align:center; value: STEP1\n Move your head around to move the cursor.\nTry to point the cursor at the logo below; width:15; wrapCount:80;');
-        text1.setAttribute('position','0.000 2.157 -5.000');
-
-        logo.setAttribute('class','tutorial');
-        logo.setAttribute('id','IOL-logo');
-        logo.setAttribute('material','src:#logo; transparent:true');
-        logo.setAttribute('mixin','alphaTrue');
-        logo.setAttribute('position','-0.033 -1.285 -6.524');
-        logo.setAttribute('scale','1.5 1.5 0');
-        logo.setAttribute('tutorial-step1','');
-
-        check1.setAttribute('class','tutorial');
-        check1.setAttribute('id','tutorial-check');
-        check1.setAttribute('material','transparent:true');
-        check1.setAttribute('mixin','alphaTrue');
-        check1.setAttribute('position','-0.033 2.285 -6.524');
-        check1.setAttribute('scale','1.5 1.5 0');
-
-        $('a-scene').appendChild(text1);
-        $('a-scene').appendChild(logo);
-        $('a-scene').appendChild(check1);
-
     }
 
     this.startGame=function(){
@@ -261,7 +460,7 @@ function Game(){
                 intersection.z=z;
                 
                 //console.log(`finalZ=${intersection.z}`)
-                console.log(cursorito.components.raycaster);
+//              console.log(cursorito.components.raycaster);
 
                 selected.entity.setAttribute("position",appendXYZwithSpaces(intersection.x,intersection.y,intersection.z));
                 selected.entity.removeAttribute("animation");
@@ -337,7 +536,6 @@ function Game(){
             setEntityMixins(entity,i,models);
             setEntityExtraProperties(entity);
             entity.setAttribute('id',`-${models[i]}-`)
-            //console.log(entity.className);
             //navigate through positionObjectArray
             objectIndex.value+=2;
             
@@ -432,6 +630,8 @@ function Game(){
         }
         deleteAll();
         let restartBox=new document.createElement('a-entity');
+        let mainmenuBox=new document.createElement('a-entity');
+
         let triviaBox=new document.createElement('a-entity');
         let scoreBox=new document.createElement('a-entity');
         let topSign=new document.createElement('a-entity');
@@ -472,6 +672,16 @@ function Game(){
         restartBox.setAttribute('material','src:#le');
         restartBox.setAttribute('startclicked','');
         $('a-scene').appendChild(restartBox);
+
+        mainmenuBox.setAttribute('id','mainmenu');   
+        mainmenuBox.setAttribute('class','clickable restartmenu');
+        mainmenuBox.setAttribute('mixin',`font alphaTrue textAlphaTrue`);
+        mainmenuBox.setAttribute('text','align:center; color:brown; value:MainMenu; width:5; zOffset:0.155; lineHeight:0; baseline:bottom;');
+        mainmenuBox.setAttribute('position','0 0 -3.5');
+        mainmenuBox.setAttribute('geometry','primitive:box; width:2; height:0.5; depth:0.3');
+        mainmenuBox.setAttribute('material','src:#le');
+        mainmenuBox.setAttribute('returntomainmenu','');
+        $('a-scene').appendChild(mainmenuBox);
 
         triviaBox.setAttribute('id','triviaBox');
         triviaBox.setAttribute('class','restartmenu');
@@ -638,46 +848,33 @@ function Game(){
         let logo=document.createElement('a-image');
         let menuText=document.createElement('a-text');
         let startButton=document.createElement('a-entity');
-        let tutorialButton=document.createElement('a-entity');
 
         logo.setAttribute('class','startmenu');
         logo.setAttribute('id','IOL-logo');
         logo.setAttribute('material','src:#logo; transparent:true');
         logo.setAttribute('mixin','alphaTrue');
-        logo.setAttribute('position','-0.033 -1.285 -6.524');
+        logo.setAttribute('position','-0.033 -1.6 -6.524');
         logo.setAttribute('scale','1.5 1.5 0');
 
         menuText.setAttribute('class','startmenu');
         menuText.setAttribute('id','menuText');
         menuText.setAttribute('mixin','font alphaTrue textAlphaTrue');
-        menuText.setAttribute('position','0.000 2.157 -5.000');
+        menuText.setAttribute('position','0.000 1.382 -5.000');
         menuText.setAttribute('scale','2.610 1.750 1.920');
-        menuText.setAttribute('text','shader:msdf; value:Needs & Wants\n A Virtual Reality Game\n\n\n\n\nPresented by:; color:white; align:center');
+        menuText.setAttribute('text','shader:msdf; value:Needs & Wants\n A Virtual Reality Game\n\n\nPresented by:; color:white; align:center');
 
         startButton.setAttribute('class','startmenu');
         startButton.setAttribute('id','startButton');
         startButton.setAttribute('geometry','primitive:box; width:3, height:0.65; depth:0.3')
         startButton.setAttribute('material','src:#le')
         startButton.setAttribute('mixin','font alphaTrue textAlphaTrue')
-        startButton.setAttribute('position','0 2.282 -5')
-        startButton.setAttribute('sound','src:assets\sounds\BG\Pop 9.wav; volume:5; on:click;')
+        startButton.setAttribute('position','0 0.948 -5')
+        startButton.setAttribute('sound','src:assets/sounds/BG/Pop Echo.wav; volume:5; on:click;')
         startButton.setAttribute('startclicked','')
         startButton.setAttribute('text','zOffset:0.155; align:center; color:brown; value:START\n; width:12; baseline:bottom;')
-
-        tutorialButton.setAttribute('class','startmenu');
-        tutorialButton.setAttribute('id','tutorialButton');
-        tutorialButton.setAttribute('geometry','primitive:box; width:3, height:0.65; depth:0.3');
-        tutorialButton.setAttribute('material','src:#le');
-        tutorialButton.setAttribute('mixin','font alphaTrue textAlphaTrue');
-        tutorialButton.setAttribute('position','0 1.2 -5');
-        tutorialButton.setAttribute('sound','src:assets\sounds\BG\Pop 9.wav; volume:5; on:click;');
-        tutorialButton.setAttribute('tutorialclicked','');
-        tutorialButton.setAttribute('text','zOffset:0.155; align:center; color:brown; value:TUTORIAL\n; width:12; baseline:bottom;');
-    
         $('a-scene').appendChild(logo);
         $('a-scene').appendChild(menuText);
         $('a-scene').appendChild(startButton);
-        $('a-scene').appendChild(tutorialButton);
 
         
     }
@@ -687,268 +884,3 @@ function Game(){
 
 const  game= new Game();
 
-
-           /////////////////////
- //<<<<<<<//CUSTOM COMPONENTS//>>>>>>>//
-         /////////////////////
-//superhands component
-AFRAME.registerComponent("capture-mouse", {
-    init: function() {
-        this.eventRepeater = this.eventRepeater.bind(this);
-        this.el.sceneEl.addEventListener(
-        "loaded",
-        () => {
-            this.el.sceneEl.canvas.addEventListener("mousedown",this.eventRepeater);
-            this.el.sceneEl.canvas.addEventListener("mouseup",this.eventRepeater);
-            this.el.sceneEl.canvas.addEventListener("touchstart",this.eventRepeater);
-            this.el.sceneEl.canvas.addEventListener("touchmove",this.eventRepeater);
-            this.el.sceneEl.canvas.addEventListener("touchend",this.eventRepeater);
-        },{ once: true });
-    },
-    eventRepeater: function(evt) {
-        if (evt.type.startsWith("touch")) {
-            evt.preventDefault();
-            // avoid repeating touchmove because it interferes with look-controls
-            if (evt.type === "touchmove") {
-                return;
-            }
-        }
-        this.el.emit(evt.type, evt.detail);
-    }
-});
-
-AFRAME.registerComponent("event_dragdrop2", {
-    play: function() {
-        this.el.addEventListener("click", function(evt) {
-            //console.log(evt)
-            //console.log(evt)
-             game.checkIfCorrect(evt);
-        });
-    }
-});
-
-//gaze controls
-AFRAME.registerComponent("stop-animation", {
-    play: function() {
-        this.el.addEventListener("mousedown", 
-        function(e) {
-            try{
-                e.toElement.removeAttribute('static-body');
-                e.toElement.setAttribute('dynamic-body','shape:auto');
-                //code that causes an error
-            }catch(errorr){
-                //console.log("index.js error mousedown event")
-            }
-            // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
-            //console.log(e)
-            //console.log(e.toElement.className)
-        });
-        this.el.addEventListener("mouseup", 
-            function(e) {
-                try{
-                    e.toElement.removeAttribute('dynamic-body');
-                    e.toElement.setAttribute('static-body','shape:auto');
-                    //code that causes an error
-                }catch(errorr){
-                    //console.log("index.js error mouseup event")
-                }
-            
-                // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
-                //console.log(escape)
-        });
-    }
-});
-
-//sounds click and swap
-AFRAME.registerComponent("selectedornot", {
-    init: function() {
-        this.el.addEventListener("click", 
-        function(e){
-            let sounds={
-                entityPickUp:$$('gameStartPickUp').components.sound,
-                entitySwap:$$('gameStartSwap').components.sound
-            }
-            let cursorText=$$('cursorText');
-
-            //console.log(e)
-            if(selected.entity=="en" ){
-                sounds.entityPickUp.playSound();
-
-                //save entity animations and positions 
-                selected.entity=e.target;
-                selected.posx=roundToThousandths(e.target.components.position.data.x);
-                selected.posy=roundToThousandths(e.target.components.position.data.y);
-                selected.posz=roundToThousandths(e.target.components.position.data.z);
-                selected.position=appendXYZwithSpaces(selected.posx,selected.posy,selected.posz)
-                selected.animation=e.target.getAttribute('animation');
-                selected.rotation=e.target.getAttribute('animation_rotate');
-
-                //remove rotation
-                selected.entity.removeAttribute('animation_rotate');
-                cursorText.setAttribute('text',`value: ${selected.entity.id}`);
-
-
-                
-                //set look-at attribute
-                selected.entity.setAttribute('look-at','#cam');
-                game.deleteGif('deleteGif');
-            }
-            if(selected.entity!=e.target){
-                sounds.entitySwap.playSound();
-
-                //revert back to original position
-                selected.entity.setAttribute('animation_rotate',selected.rotation);
-                selected.entity.setAttribute('position',selected.position);
-                selected.entity.setAttribute('animation',selected.animation);
-                console.log(String(e.target.getAttribute('animation')));
-                //remove look-at
-                selected.entity.removeAttribute('look-at');
- 
-                //save new entity
-                selected.entity=e.target;
-                selected.posx=roundToThousandths(e.target.components.position.data.x);
-                selected.posy=roundToThousandths(e.target.components.position.data.y);
-                selected.posz=roundToThousandths(e.target.components.position.data.z);
-                selected.position=appendXYZwithSpaces(selected.posx,selected.posy,selected.posz)
-                selected.animation=e.target.getAttribute('animation');
-
-                //remove rotation
-                selected.entity.removeAttribute('animation_rotate');
-                cursorText.setAttribute('text',`value: ${selected.entity.id}`);
-
-                //set look-at attribute
-                selected.entity.setAttribute('look-at','#cam');
-                game.deleteGif('deleteGif');
-            }
-
-            // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
-        });
-    }
-});
-
-AFRAME.registerComponent("selectedornot2", {
-    init: function() {
-        let obj;
-        this.el.addEventListener("click", 
-        function(e){
-            console.log(e)
-            selected.entity=e.target
-            // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
-        });
-    }
-});
-
-AFRAME.registerComponent("emitgrab", {
-    init: function() {
-        let obj;
-        this.el.addEventListener("mousedown", e => {
-        e.toElement.removeAttribute('static-body');
-        e.toElement.setAttribute('dynamic-body','shape:auto');
-        // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
-        console.log(e)
-        console.log(e.toElement.className)
-        });
-        this.el.addEventListener("mouseup", e => {
-        e.toElement.removeAttribute('dynamic-body');
-        e.toElement.setAttribute('static-body','shape:auto');
-        // color randomizer credit: http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript#comment6801353_5365036
-        console.log(e)
-        });
-    }
-});
-
-AFRAME.registerComponent('is-sound-loaded', {
-    init: function () {
-
-        this.el.addEventListener('sound-loaded',function(){
-            console.log("Game Starting...")
-            game.mainMenu();
-        })
-    }
-  });
-
-AFRAME.registerComponent('startclicked', {
-    init: function () {
-        this.el.addEventListener('click',
-        function(evt){
-            let sounds={
-                buttonPop:$$('startMenuPop').components.sound,
-            }
-            sounds.buttonPop.playSound();
-            deleteRestartMenu();
-            game.startGame();
-            game.removeentity(this,false);
-            
-        })
-    }
-});
-
-AFRAME.registerComponent('tutorialclicked', {
-    init: function () {
-        this.el.addEventListener('click',
-        function(evt){
-            let sounds={
-                buttonPop:$$('startMenuPop').components.sound,
-            }
-            sounds.buttonPop.playSound();
-            deleteMainMenu();
-            game.tutorial();
-            game.removeentity(this,false);
-            
-        })
-    }
-});
-
-AFRAME.registerComponent('raycaster-listen', {
-    dependencies: ['raycaster'],
-    tick: function () {
-        timer=Date.now();
-        let difference=timer-prevtime;
-        if(difference>10){
-            prevtime=Date.now();
-        }
-        game.getRayIntersection();
-        this.el.addEventListener('raycaster-intersected', 
-        function(evt){
-          //  console.log("fuesddddddddddddd");
-         //   console.log(evt.detail);
-          //  console.log(evt.detail.getIntersection(this.el));
-        });
-    }
-});
-
-AFRAME.registerComponent('audiohandler', {
-    init:function() {
-    let playing = false;
-    let audio = this.el.components.sound;
-    this.el.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/b/bd/Bizet_-_Carmen_-_Toreador_Song_%28French%2C_Musopen%29.ogg");
-
-    this.el.addEventListener('click', () => {
-        if(!playing) {
-            audio.playSound();
-        } else {
-            audio.stopSound();
-        }
-        playing = !playing;
-        });
-    }
-});
-
-AFRAME.registerComponent('tutorial-step1',
-{
-    init: function() {
-        let cursorito=$$('cursorito');
-        let checkbox=$$('tutorial-check')
-        if(cursorito.components.raycaster.intersections[0]!=="undefined"&&selected.entity!="en"){
-            try {
-                if(cursorito.components.raycaster.prevIntersectedEls[0]==this) {
-                    checkbox.setAttribute('material','src:#correctGif')
-                }
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    }
-})
-//game.startGame();

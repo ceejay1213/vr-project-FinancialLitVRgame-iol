@@ -5,36 +5,25 @@
     <title>WEB-VR</title>
     <meta name="description" content="A-FRAME SAMPLE GAME" />
     
-   <!--main AFRAME-->
-   <script src="js/aframe.min.js"></script>
-   <!--main AFRAME-->
-   <!--script src="js/vr-mode-ui.js"></script-->
-   <!--Aframe Camera-->
-   <!--script src="js/aframe-cursor.js"></script-->
-   <!--Aframe Camera-->
-   <!--script src="js/aframe-a-scene.js"></script-->
-   <!--SUPERHANDS-->
    <script> 
-   AFRAME.registerComponent('auto-init-vr',{
-      init:function(){
-         var scene=this;
-         scene.el.addEventListener('loaded',function(){
-               setTimeout(function(){
-                  console.log('Automatically entering VR...');
-                  scene.el.sceneEl.enterVR();
-               },3000)
-         });
-      }
-         /*
-         setTimeout(function(){
-            console.log("automatically entering vr...");
-            console.log(this)
-            scene.el.sceneEl.enterVR();
-         },10000);*/
+      AFRAME.registerComponent('auto-init-vr',{
+         init:function(){
+            var scene=this;
+            scene.el.addEventListener('loaded',function(){
+                  setTimeout(function(){
+                     console.log('Automatically entering VR...');
+                     scene.el.sceneEl.enterVR();
+                  },3000)
+            });
+         }
       })
    </script>
+   
+   <!--main AFRAME-->
+   <script src="js/aframe.min.js"></script>
+
    <script src="js/aframe-event-set-component.min.js"></script>
-   <script src="js/super-hands.min.js"></script>
+   
    <!--Physics-->
    <script src="js/aframe-physics-system.min.js"></script>
    <!--Extras-->
@@ -52,48 +41,44 @@
   </head>
 
   <body>
-    <a-scene auto-init-vr stats physics shadow="enabled:true" background="color: lightblue" renderer=
+    <a-scene auto-init-vr physics shadow="enabled:true" background="color: lightblue" renderer=
     "foveationLevel:0; 
      antialias: false; 
      precision:low">
-      <!--renderer=
-       "foveationLevel:0; 
-        antialias: false; 
-        precision:low"-->
-      <a-assets timeout="10000">
+      <a-assets timeout="15000">
          <!--NEEDS AND WANTS-->
-         <img id="firstaidpixel"        src="assets/image/pixel/aid.png">
-         <img id="ballpixel"            src="assets/image/pixel/ball.png">
-         <img id="bananapixel"          src="assets/image/pixel/banana.png">
-         <img id="bearpixel"            src="assets/image/pixel/bear.png">
-         <img id="bookpixel"            src="assets/image/pixel/book.png">
-         <img id="bulbpixel"            src="assets/image/pixel/bulb.png">
-         <img id="burgerpixel"          src="assets/image/pixel/burger.png">
-         <img id="candypixel"           src="assets/image/pixel/candy.png">
-         <img id="chocolatepixel"       src="assets/image/pixel/choco.png">
-         <img id="cokepixel"            src="assets/image/pixel/coke.png">
-         <img id="consolepixel"         src="assets/image/pixel/console.png">
-         <img id="cornpixel"            src="assets/image/pixel/corn2.png">
-         <img id="dewpixel"             src="assets/image/pixel/dew.png">
-         <img id="dollpixel"            src="assets/image/pixel/doll.png">
-         <img id="eggplantpixel"        src="assets/image/pixel/eggplant.png">
-         <img id="fishpixel"            src="assets/image/pixel/fish.png">
-         <img id="housepixel"           src="assets/image/pixel/house.png">
-         <img id="icecreampixel"        src="assets/image/pixel/icecream.png">
-         <img id="lollipoppixel"        src="assets/image/pixel/lollipop.png">
-         <img id="meatpixel"            src="assets/image/pixel/meat.png">
-         <img id="pantspixel"           src="assets/image/pixel/pants.png">
-         <img id="pencilpixel"          src="assets/image/pixel/pencil.png">
-         <img id="phonepixel"           src="assets/image/pixel/phone.png">
-         <img id="phoneoldpixel"        src="assets/image/pixel/Phoneold.png">
-         <img id="pizzapixel"           src="assets/image/pixel/pizza.png">
-         <img id="popsiclepixel"        src="assets/image/pixel/pop.png">
-         <img id="ringpixel"            src="assets/image/pixel/ring.png">
-         <img id="shirtpixel"           src="assets/image/pixel/shirt.png">
-         <img id="strawberrypixel"      src="assets/image/pixel/strawberry.png">
-         <img id="watchpixel"           src="assets/image/pixel/watch.png">
-         <img id="waterpixel"           src="assets/image/pixel/water.png">
-         <img id="watermelonpixel"      src="assets/image/pixel/watermelon.png">
+         <img   id="firstaidpixel"        src="assets/image/pixel/aid.png">
+         <img   id="ballpixel"            src="assets/image/pixel/ball.png">
+         <img   id="bananapixel"          src="assets/image/pixel/banana.png">
+         <img   id="bearpixel"            src="assets/image/pixel/bear.png">
+         <img   id="bookpixel"            src="assets/image/pixel/book.png">
+         <img   id="bulbpixel"            src="assets/image/pixel/bulb.png">
+         <img   id="burgerpixel"          src="assets/image/pixel/burger.png">
+         <img   id="candypixel"           src="assets/image/pixel/candy.png">
+         <img   id="chocolatepixel"       src="assets/image/pixel/choco.png">
+         <img   id="cokepixel"            src="assets/image/pixel/coke.png">
+         <img   id="consolepixel"         src="assets/image/pixel/console.png">
+         <img   id="cornpixel"            src="assets/image/pixel/corn2.png">
+         <img   id="dewpixel"             src="assets/image/pixel/dew.png">
+         <img   id="dollpixel"            src="assets/image/pixel/doll.png">
+         <img   id="eggplantpixel"        src="assets/image/pixel/eggplant.png">
+         <img   id="fishpixel"            src="assets/image/pixel/fish.png">
+         <img   id="housepixel"           src="assets/image/pixel/house.png">
+         <img   id="icecreampixel"        src="assets/image/pixel/icecream.png">
+         <img   id="lollipoppixel"        src="assets/image/pixel/lollipop.png">
+         <img   id="meatpixel"            src="assets/image/pixel/meat.png">
+         <img   id="pantspixel"           src="assets/image/pixel/pants.png">
+         <img   id="pencilpixel"          src="assets/image/pixel/pencil.png">
+         <img   id="phonepixel"           src="assets/image/pixel/phone.png">
+         <img   id="phoneoldpixel"        src="assets/image/pixel/Phoneold.png">
+         <img   id="pizzapixel"           src="assets/image/pixel/pizza.png">
+         <img   id="popsiclepixel"        src="assets/image/pixel/pop.png">
+         <img   id="ringpixel"            src="assets/image/pixel/ring.png">
+         <img   id="shirtpixel"           src="assets/image/pixel/shirt.png">
+         <img   id="strawberrypixel"      src="assets/image/pixel/strawberry.png">
+         <img   id="watchpixel"           src="assets/image/pixel/watch.png">
+         <img   id="waterpixel"           src="assets/image/pixel/water.png">
+         <img   id="watermelonpixel"      src="assets/image/pixel/watermelon.png">
          
 
 
@@ -332,11 +317,6 @@
          </a-mixin>
         
 
-         <!--InterActivity-->
-         <a-mixin id="interactibfull" 
-            grabbable stretchable draggable dropppable>
-         </a-mixin>
-
          <!--ANIMATION-->
          <a-mixin id="hoverupdown" 
             animation=  
@@ -377,20 +357,19 @@
 
          <!--UI ASSETS-->
          <a-asset-item id="heartmodel"    src="assets/models/scene.gltf"></a-asset-item>
-         <img id="le"                     src="assets/image/hardwood2_diffuse_2.jpg">
-         <img id="groundTexture"          src="assets/image/sand2.jpg">
-         <img id="buttonTexture"          src="assets/image/brick_diffuse.jpg">
-         <img id ="logo"                  src="assets/image/iol_logo2.png">
-         <img id="skyTexture"             src="assets/image/background1.png" >
-         <img id="correctGif"             src="assets/gif/checkImage.png" >
-         <img id="wrongGif"               src="assets/gif/xImage.png" >
-         <img id="nb"                     src="assets/gif/needs.gif" >
-         <img id="wb"                     src="assets/gif/wants.gif" >
-         <img id="needsAndWantsSign"      src="assets/gif/needsAndWantsSign.gif" >
-         <img id="coins"                  src="assets/image/pixel/coiners.png" >
-         <img id="nice"                   src="assets/image/pixel/nice.png" >
-         <img id="veryGood"               src="assets/image/pixel/very good2.png" >
-         <img id="gameOver"               src="assets/image/pixel/game over2.png" >
+         <img   id="le"                     src="assets/image/hardwood2_diffuse_2.jpg">
+         <img   id="buttonTexture"          src="assets/image/brick_diffuse.jpg">
+         <img   id ="logo"                  src="assets/image/iol_logo2.png">
+         <img   id="skyTexture"             src="assets/image/background2.png" >
+         <img   id="correctGif"             src="assets/gif/checkImage.png" >
+         <img   id="wrongGif"               src="assets/gif/xImage.png" >
+         <img   id="nb"                     src="assets/gif/needs.gif" >
+         <img   id="wb"                     src="assets/gif/wants.gif" >
+         <img   id="needsAndWantsSign"      src="assets/gif/needsAndWantsSign.gif" >
+         <img   id="coins"                  src="assets/image/pixel/coiners.png" >
+         <img   id="nice"                   src="assets/image/pixel/nice.png" >
+         <img   id="veryGood"               src="assets/image/pixel/very good2.png" >
+         <img   id="gameOver"               src="assets/image/pixel/game over2.png" >
          <a-mixin id="heart" 
             material="src:#coins; transparent:true; alpha-test:0.5" 
             geometry="primitive:box; height:1;width:1;depth:0.01"
@@ -426,25 +405,22 @@
 
 
          <!--Audio-->
-         <audio id="sample" src="assets/sounds/nu.ogg" positional="false" ></audio>
-         <audio id="SMPop" src="assets/sounds/BG/Pop Echo.wav" positional="false"></audio>
-         <audio id="SMBGM" src="assets/sounds/BG/Having a good time_2.mp3" positional="false" preload="auto"></audio>
-         <audio id="GSBGM" src="assets/sounds/BG/Arcada Game Melody Loop 8 bars.wav" positional="false"></audio>
-         <audio id="GSSwap" src="assets/sounds/BG/Gaming Swipe Throw.wav" positional="false"></audio>
-         <audio id="GSPickUp" src="assets/sounds/BG/Game Play Pickup.wav" positional="false"></audio>
-         <audio id="GSCorrect" src="assets/sounds/BG/Gaming Health Win.wav" positional="false"></audio>
-         <audio id="GSWrong" src="assets/sounds/BG/Gaming Bop Hit.wav" positional="false"></audio>
-         <audio id="GOFail" src="assets/sounds/BG/Game Play Fall.wav" positional="false"></audio>
-         <audio id="GOWin" src="assets/sounds/BG/Game Play Reveal Bonus.wav" positional="false"></audio>
+         <audio class="loadassets" id="sample" src="assets/sounds/nu.ogg" positional="false" ></audio>
+         <audio class="loadassets" id="SMPop" src="assets/sounds/BG/Pop Echo.wav" positional="false"></audio>
+         <audio class="loadassets" id="SMBGM" src="assets/sounds/BG/Having a good time_3.mp3" positional="false" preload="auto"></audio>
+         <audio class="loadassets" id="GSBGM" src="assets/sounds/BG/Arcada Game Melody Loop 8 bars.wav" positional="false"></audio>
+         <audio class="loadassets" id="GSSwap" src="assets/sounds/BG/Gaming Swipe Throw.wav" positional="false"></audio>
+         <audio class="loadassets" id="GSPickUp" src="assets/sounds/BG/Game Play Pickup.wav" positional="false"></audio>
+         <audio class="loadassets" id="GSCorrect" src="assets/sounds/BG/Gaming Health Win.wav" positional="false"></audio>
+         <audio class="loadassets" id="GSWrong" src="assets/sounds/BG/Gaming Bop Hit.wav" positional="false"></audio>
+         <audio class="loadassets" id="GOFail" src="assets/sounds/BG/Game Play Fall.wav" positional="false"></audio>
+         <audio class="loadassets" id="GOWin" src="assets/sounds/BG/Game Play Reveal Bonus.wav" positional="false"></audio>
 
-         <!-- Bucket-->
-         <a-asset-item id="bucket-obj" src="assets/bucket.obj"></a-asset-item>
-         <a-asset-item id="bucket-mtl" src="assets/bucket.mtl"></a-asset-item> 
 
       </a-assets>
       <!--SOUNDS-->
       <a-sound id=startMenuPop src="#SMPop" volume="1" poolSize="3"></a-sound>
-      <a-sound is-sound-loaded id=startMenuBGM src="#SMBGM" volume="1" loop="true" poolSize="3"></a-sound>
+      <a-sound game-start-initiator id=startMenuBGM src="#SMBGM" volume="1" loop="true" poolSize="3"></a-sound>
       <a-sound id=gameStartBGM src="#GSBGM" volume="1" loop="true" poolSize="3"></a-sound>
       <a-sound id=gameStartPickUp src="#GSPickUp" volume="2" ></a-sound>
       <a-sound id=gameStartSwap src="#GSSwap" volume="2" ></a-sound>
@@ -455,7 +431,6 @@
 
       
       <!--#camera-->
-
       <a-camera id="cam" position="0 1.6 0" look-controls="pointerLockEnabled:true">
          <a-cursor id="cursorito"
                cursor="fuse:true; fuseTimeout:1000"
@@ -515,8 +490,7 @@
          <a-text id="cursorText"
                   mixin="font"
                   text="align:center; color:white; value: ; width:0.8; yOffset:40; alpha-test:0.5;"
-                  position="0.000 -0.020 -0.500"
-                  sound=" src:assets\sounds\BG\Pop 9.wav; volume:5; on:click;">
+                  position="0.000 -0.020 -0.500">
             </a-text>
          <a-ring  radius-inner="0.01" radius-outer="0.02" material="color:black" position="0 0 -0.8"></a-ring>
       </a-camera>
@@ -541,5 +515,10 @@
             rotation="0 -90 0">
       </a-sky>
     </a-scene>
+    <script>
+      let loadSound=document.getElementById("startMenuBGM");
+      loadSound.load();
+   </script>
+
   </body>
 </html>
