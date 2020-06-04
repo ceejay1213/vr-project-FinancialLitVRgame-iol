@@ -5,6 +5,11 @@
     <title>WEB-VR</title>
     <meta name="description" content="A-FRAME SAMPLE GAME" />
     
+   
+   
+   <!--main AFRAME-->
+   <script src="js/aframe.min.js"></script>
+   
    <script> 
       AFRAME.registerComponent('auto-init-vr',{
          init:function(){
@@ -18,9 +23,6 @@
          }
       })
    </script>
-   
-   <!--main AFRAME-->
-   <script src="js/aframe.min.js"></script>
 
    <script src="js/aframe-event-set-component.min.js"></script>
    
@@ -36,6 +38,8 @@
    <script src="js/aframe-look-at-component.js"></script>
    <!--GIF component-->
    <script src="js/aframe-gif-shader-master.js"></script>
+   <!--Environment-->
+   <script src="js/aframe-environment-component.min.js"></script>
 
    
   </head>
@@ -360,7 +364,7 @@
          <img   id="le"                     src="assets/image/hardwood2_diffuse_2.jpg">
          <img   id="buttonTexture"          src="assets/image/brick_diffuse.jpg">
          <img   id ="logo"                  src="assets/image/iol_logo2.png">
-         <img   id="skyTexture"             src="assets/image/background2.png" >
+         <img   id="skyTexture"             src="assets/image/background2.jpg" >
          <img   id="correctGif"             src="assets/gif/checkImage.png" >
          <img   id="wrongGif"               src="assets/gif/xImage.png" >
          <img   id="nb"                     src="assets/gif/needs.gif" >
@@ -404,17 +408,17 @@
      	</a-mixin>
 
 
-         <!--Audio-->
-         <audio class="loadassets" id="sample" src="assets/sounds/nu.ogg" positional="false" ></audio>
-         <audio class="loadassets" id="SMPop" src="assets/sounds/BG/Pop Echo.wav" positional="false"></audio>
-         <audio class="loadassets" id="SMBGM" src="assets/sounds/BG/Having a good time_3.mp3" positional="false" preload="auto"></audio>
-         <audio class="loadassets" id="GSBGM" src="assets/sounds/BG/Arcada Game Melody Loop 8 bars.wav" positional="false"></audio>
-         <audio class="loadassets" id="GSSwap" src="assets/sounds/BG/Gaming Swipe Throw.wav" positional="false"></audio>
-         <audio class="loadassets" id="GSPickUp" src="assets/sounds/BG/Game Play Pickup.wav" positional="false"></audio>
-         <audio class="loadassets" id="GSCorrect" src="assets/sounds/BG/Gaming Health Win.wav" positional="false"></audio>
-         <audio class="loadassets" id="GSWrong" src="assets/sounds/BG/Gaming Bop Hit.wav" positional="false"></audio>
-         <audio class="loadassets" id="GOFail" src="assets/sounds/BG/Game Play Fall.wav" positional="false"></audio>
-         <audio class="loadassets" id="GOWin" src="assets/sounds/BG/Game Play Reveal Bonus.wav" positional="false"></audio>
+      <!--Audio-->
+      <audio class="loadassets" id="sample" src="assets/sounds/nu.ogg" positional="false" ></audio>
+      <audio class="loadassets" id="SMPop" src="assets/sounds/BG/Pop Echo.wav" positional="false"></audio>
+      <audio class="loadassets" id="SMBGM" src="assets/sounds/BG/Having a good time_3.mp3" positional="false" preload="auto"></audio>
+      <audio class="loadassets" id="GSBGM" src="assets/sounds/BG/Arcada Game Melody Loop 8 bars.wav" positional="false"></audio>
+      <audio class="loadassets" id="GSSwap" src="assets/sounds/BG/Gaming Swipe Throw.wav" positional="false"></audio>
+      <audio class="loadassets" id="GSPickUp" src="assets/sounds/BG/Game Play Pickup.wav" positional="false"></audio>
+      <audio class="loadassets" id="GSCorrect" src="assets/sounds/BG/Gaming Health Win.wav" positional="false"></audio>
+      <audio class="loadassets" id="GSWrong" src="assets/sounds/BG/Gaming Bop Hit.wav" positional="false"></audio>
+      <audio class="loadassets" id="GOFail" src="assets/sounds/BG/Game Play Fall.wav" positional="false"></audio>
+      <audio class="loadassets" id="GOWin" src="assets/sounds/BG/Game Play Reveal Bonus.wav" positional="false"></audio>
 
 
       </a-assets>
@@ -432,7 +436,7 @@
       
       <!--#camera-->
       <a-camera id="cam" position="0 1.6 0" look-controls="pointerLockEnabled:true">
-         <a-cursor id="cursorito"
+         <a-cursor id="mouseCursor"
                cursor="fuse:true; fuseTimeout:1000"
                position="0 0 -0.7"
                raycaster-listen
@@ -499,7 +503,7 @@
             theta-length="180" 
             radius="60" 
             geometry="segmentsHeight:16; segmentsWidth:24"
-            material="src:#skyTexture;"
+            material="color: black"
             mixin="alphaTrue"
             raycaster-listen
             rotation="0 -90 0">
